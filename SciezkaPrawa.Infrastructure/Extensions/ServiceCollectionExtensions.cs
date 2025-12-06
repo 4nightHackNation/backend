@@ -14,6 +14,7 @@ namespace SciezkaPrawa.Infrastructure.Extensions
             options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IActRepository, ActRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SciezkaPrawa.Application.Acts;
+using SciezkaPrawa.Application.Tags;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace SciezkaPrawa.Application.Extensions
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IActService, ActService>();
+            services.AddScoped<ITagService, TagService>();
             // rejestrujesz serwisy z Application, np. IActService
             return services;
         }
