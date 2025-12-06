@@ -48,6 +48,17 @@ namespace SciezkaPrawa.Application.Acts
             return act;
         }
 
+        public async Task DeleteAsync(Guid id)
+        {
+            var act = await actRepository.GetByIdAsync(id);
+
+            if (act is null)
+                throw new NotFoundException(nameof(Act), id.ToString());
+
+            await actRepository.DeleteAsync(act);
+            await actRepository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Act>> GetAllAsync()
         {
             var acts = await actRepository.GetAllAsync();
@@ -64,6 +75,42 @@ namespace SciezkaPrawa.Application.Acts
             }
 
             return (act);
+        }
+
+        public async Task UpdateAsync(Guid id, SaveActDto dto)
+        {
+            var act = await actRepository.GetByIdAsync(id);
+
+            if (act is null)
+                throw new NotFoundException(nameof(Act), id.ToString());
+
+            act.Title = dto.Title;
+            act.Summary = dto.Summary;
+            act.Status = dto.Status;
+            act.Priority = dto.Priority;
+            act.Urgency = dto.Urgency;
+            act.Committee = dto.Committee;
+            act.Sponsor = dto.Sponsor;
+            act.HasConsultation = dto.HasConsultation;
+            act.ConsultationStart = dto.ConsultationStart;
+            act.ConsultationEnd = dto.ConsultationEnd;
+            act.AmendmentsCount = dto.AmendmentsCount;
+            act.LastUpdated = DateTime.UtcNow;
+
+            act.Tags.Clear();
+            if (dto.TagIds is { Count: > 0 })
+            {
+                foreach (var tagId in dto.TagIds.Distinct())
+                {
+                    act.Tags.Add(new ActTag
+                    {
+                        ActId = act.Id,
+                        TagId = tagId
+                    });
+                }
+            }
+
+            await actRepository.SaveChangesAsync();
         }
     }
 }

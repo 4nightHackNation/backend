@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SciezkaPrawa.Domain.Entities;
 using SciezkaPrawa.Application.Acts;
 using SciezkaPrawa.Application.Acts.DTOs;
+using SciezkaPrawa.Domain.Entities;
 
 namespace SciezkaPrawa.API.Controllers
 {
@@ -35,5 +35,23 @@ namespace SciezkaPrawa.API.Controllers
                 new { id = created.Id },
                 created);
         }
+
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Update(Guid id, SaveActDto dto)
+        {
+            await actService.UpdateAsync(id, dto);
+
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteAct(Guid id)
+        {
+            await actService.DeleteAsync(id);
+            return NoContent();
+        }
+
     }
 }

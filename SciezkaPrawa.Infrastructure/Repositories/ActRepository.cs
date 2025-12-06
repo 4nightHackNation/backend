@@ -17,6 +17,11 @@ namespace SciezkaPrawa.Infrastructure.Repositories
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(Act act)
+        {
+            dbContext.Remove(act);
+        }
+
         public async Task<IEnumerable<Act>> GetAllAsync()
         {
             var acts = await dbContext.Acts.ToListAsync();
@@ -27,6 +32,11 @@ namespace SciezkaPrawa.Infrastructure.Repositories
         {
             var act = await dbContext.Acts.FirstOrDefaultAsync(a => a.Id == id);
             return act;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await dbContext.SaveChangesAsync();
         }
     }
 }

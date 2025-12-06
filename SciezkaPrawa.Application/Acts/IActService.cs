@@ -13,5 +13,7 @@ namespace SciezkaPrawa.Application.Acts
         Task<IEnumerable<Act>> GetAllAsync();
         Task<Act?> GetById(Guid id);
         Task<Act> CreateAsync(SaveActDto dto);
+        Task UpdateAsync(Guid id, SaveActDto dto);
+        Task DeleteAsync(Guid id);
     }
 }
