@@ -12,7 +12,7 @@ namespace SciezkaPrawa.API.Controllers
     public class TagsController(ITagService tagService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tag>>> GetAllActs()
+        public async Task<ActionResult<IEnumerable<Tag>>> GetAllTags()
         {
 
             var acts = await tagService.GetAllAsync();
@@ -37,15 +37,15 @@ namespace SciezkaPrawa.API.Controllers
                 created);
         }
 
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateAct(int id, [FromBody] SaveTagDto dto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTag(int id, [FromBody] SaveTagDto dto)
         {
             await tagService.UpdateAsync(id, dto);
             return NoContent();
         }
 
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteAct(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTag(int id)
         {
             await tagService.DeleteAsync(id);
             return NoContent();
