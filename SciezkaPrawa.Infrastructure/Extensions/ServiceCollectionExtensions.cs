@@ -16,6 +16,8 @@ namespace SciezkaPrawa.Infrastructure.Extensions
             services.AddScoped<IActRepository, ActRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IStageRepository, StageRepository>();
+            services.AddScoped<IActReadingVoteRepository, ActReadingVoteRepository>();
+            services.AddScoped<IActVersionRepository, ActVersionRepository>();
         }
     }
 }
