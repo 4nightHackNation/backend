@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SciezkaPrawa.Application.Acts;
+using SciezkaPrawa.Application.Stages;
 using SciezkaPrawa.Application.Tags;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace SciezkaPrawa.Application.Extensions
         {
             services.AddScoped<IActService, ActService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IActStagesService, ActStagesService>();
             // rejestrujesz serwisy z Application, np. IActService
             return services;
         }
