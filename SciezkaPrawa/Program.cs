@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using SciezkaPrawa.API.Middlewares;
 using SciezkaPrawa.Application.AiClient;
 using SciezkaPrawa.Application.Extensions;
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Configuration.GetConnectionString("ApplicationDb");
+
 
 var configuration = builder.Configuration;
 
@@ -34,6 +36,10 @@ builder.Services.AddScoped<IPdfTextExtractor, PdfPigTextExtractor>();
 
 builder.Services.AddScoped<IActExplanationService, ActExplanationService>();
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
 
 builder.Services.AddControllers();
 builder.Services.AddInfraStructure(builder.Configuration);
@@ -52,6 +58,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DevCors", policy =>
+    {
+        policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("https://localhost:3000", "http://localhost:3000")
+            .AllowCredentials();
+    });
+});
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
