@@ -14,16 +14,14 @@ namespace SciezkaPrawa.Application.Acts
             {
                 Id = Guid.NewGuid(),
                 Title = dto.Title,
-                Summary = dto.Summary,
                 Status = dto.Status,
                 Priority = dto.Priority,
-                Urgency = dto.Urgency,
-                Committee = dto.Committee,
+                Kadencja = dto.Kadencja,
+                CurrentStage = dto.CurrentStage,
                 Sponsor = dto.Sponsor,
                 HasConsultation = dto.HasConsultation,
                 ConsultationStart = dto.ConsultationStart,
                 ConsultationEnd = dto.ConsultationEnd,
-                AmendmentsCount = dto.AmendmentsCount,
                 DateSubmitted = DateTime.UtcNow,
                 LastUpdated = DateTime.UtcNow
             };
@@ -62,18 +60,16 @@ namespace SciezkaPrawa.Application.Acts
             {
                 Id = a.Id,
                 Title = a.Title,
-                Summary = a.Summary,
                 Status = a.Status,
                 Priority = a.Priority,
-                Urgency = a.Urgency,
-                Committee = a.Committee,
+                Kadencja = a.Kadencja,
+                CurrentStage = a.CurrentStage,
                 Sponsor = a.Sponsor,
                 DateSubmitted = a.DateSubmitted,
                 LastUpdated = a.LastUpdated,
                 HasConsultation = a.HasConsultation,
                 ConsultationStart = a.ConsultationStart,
                 ConsultationEnd = a.ConsultationEnd,
-                AmendmentsCount = a.AmendmentsCount,
                 Tags = a.Tags
                     .Select(at => new TagDto
                     {
@@ -100,18 +96,16 @@ namespace SciezkaPrawa.Application.Acts
             {
                 Id = act.Id,
                 Title = act.Title,
-                Summary = act.Summary,
                 Status = act.Status,
                 Priority = act.Priority,
-                Urgency = act.Urgency,
-                Committee = act.Committee,
+                Kadencja = act.Kadencja,
+                CurrentStage = act.CurrentStage,
                 Sponsor = act.Sponsor,
                 DateSubmitted = act.DateSubmitted,
                 LastUpdated = act.LastUpdated,
                 HasConsultation = act.HasConsultation,
                 ConsultationStart = act.ConsultationStart,
                 ConsultationEnd = act.ConsultationEnd,
-                AmendmentsCount = act.AmendmentsCount,
                 PlainLanguageSummary = act.PlainLanguageSummary,
 
                 Tags = act.Tags
@@ -136,16 +130,14 @@ namespace SciezkaPrawa.Application.Acts
                 throw new NotFoundException(nameof(Act), id.ToString());
 
             act.Title = dto.Title;
-            act.Summary = dto.Summary;
             act.Status = dto.Status;
             act.Priority = dto.Priority;
-            act.Urgency = dto.Urgency;
-            act.Committee = dto.Committee;
+            act.Kadencja = dto.Kadencja;
+            act.CurrentStage = dto.CurrentStage;
             act.Sponsor = dto.Sponsor;
             act.HasConsultation = dto.HasConsultation;
             act.ConsultationStart = dto.ConsultationStart;
             act.ConsultationEnd = dto.ConsultationEnd;
-            act.AmendmentsCount = dto.AmendmentsCount;
             act.LastUpdated = DateTime.UtcNow;
 
             act.Tags.Clear();

@@ -11,12 +11,10 @@ namespace SciezkaPrawa.Application.Acts.DTOs
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = default!;
-        public string? Summary { get; set; }
         public string Status { get; set; } = default!;
         public string Priority { get; set; } = default!;
-        public string Urgency { get; set; } = default!;
-
-        public string? Committee { get; set; }
+        public int Kadencja { get; set; }
+        public int CurrentStage { get; set; }
         public string? Sponsor { get; set; }
 
         public DateTime DateSubmitted { get; set; }
