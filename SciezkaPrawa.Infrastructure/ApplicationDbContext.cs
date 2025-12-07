@@ -1,16 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SciezkaPrawa.Domain.Entities;
 
 namespace SciezkaPrawa.Infrastructure;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
-{  
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }  
     internal DbSet<Act> Acts { get; set; }
     internal DbSet<ActStage> ActStages { get; set; }
     internal DbSet<ActVersion> ActVersion { get; set; }
     internal DbSet<ActReadingVote> ActReadingVotes { get; set; }
     internal DbSet<Tag> Tags { get; set; }
     internal DbSet<ActTag> ActTags { get; set; }
+    public DbSet<ActComment> ActComments { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -44,7 +51,16 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .WithMany(a => a.ReadingVotes)
             .HasForeignKey(rv => rv.ActId);
 
+        modelBuilder.Entity<ActComment>()
+               .HasOne(c => c.Act)
+               .WithMany(a => a.Comments)
+               .HasForeignKey(c => c.ActId)
+               .OnDelete(DeleteBehavior.Cascade);
+
     }
 
 }
+
+
+
 
