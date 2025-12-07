@@ -13,7 +13,7 @@ namespace SciezkaPrawa.Domain.Entities
         public string Status { get; set; } = default!; 
         public string Priority { get; set; } = default!; 
         public string? Sponsor { get; set; }
-        public int Kadencja { get; set; }
+        public string Kadencja { get; set; }
         public DateTime DateSubmitted { get; set; }
         public DateTime LastUpdated { get; set; }
         public int CurrentStage { get; set; }

@@ -12,8 +12,9 @@ namespace SciezkaPrawa.Application.Acts.DTOs
         public Guid Id { get; set; }
         public string Title { get; set; } = default!;
         public string Status { get; set; } = default!;
+        public string PlainLanguageSummary { get; set; } = default!;
         public string Priority { get; set; } = default!;
-        public int Kadencja { get; set; }
+        public string? Kadencja { get; set; } = default!;
         public int CurrentStage { get; set; }
         public string? Sponsor { get; set; }
 

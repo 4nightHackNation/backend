@@ -15,6 +15,7 @@ namespace SciezkaPrawa.Application.Acts
                 Id = Guid.NewGuid(),
                 Title = dto.Title,
                 Status = dto.Status,
+                PlainLanguageSummary = dto.PlainLanguageSummary,
                 Priority = dto.Priority,
                 Kadencja = dto.Kadencja,
                 CurrentStage = dto.CurrentStage,
@@ -60,6 +61,7 @@ namespace SciezkaPrawa.Application.Acts
             {
                 Id = a.Id,
                 Title = a.Title,
+                PlainLanguageSummary = a.PlainLanguageSummary,
                 Status = a.Status,
                 Priority = a.Priority,
                 Kadencja = a.Kadencja,
@@ -131,6 +133,7 @@ namespace SciezkaPrawa.Application.Acts
 
             act.Title = dto.Title;
             act.Status = dto.Status;
+            act.PlainLanguageSummary = dto.PlainLanguageSummary;
             act.Priority = dto.Priority;
             act.Kadencja = dto.Kadencja;
             act.CurrentStage = dto.CurrentStage;
