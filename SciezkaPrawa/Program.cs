@@ -59,12 +59,14 @@ builder.Services.ConfigureApplicationCookie(options =>
 // CORS 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("DevCors", policy =>
+    options.AddPolicy("AllowLocalhost", policy =>
     {
         policy
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .WithOrigins("http://localhost:3000", "https://localhost:3000")
+            .WithOrigins("http://localhost:3000", "https://localhost:3000",
+            "http://localhost:5173", "http://localhost:8080", "http://localhost:8081",
+            "http://localhost:5009")
             .AllowCredentials();
     });
 });
@@ -97,11 +99,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-app.UseHttpsRedirection();
+app.UseCors("AllowLocalhost");
+
+//app.UseHttpsRedirection();
 
 app.UseForwardedHeaders();
 
-app.UseCors("DevCors");
+app.UseRouting();
+
+
+//app.UseCors("DevCors");
 
 app.UseAuthentication();   
 app.UseAuthorization();
