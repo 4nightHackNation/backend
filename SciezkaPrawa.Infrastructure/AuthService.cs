@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using SciezkaPrawa.Application.Auth;
-using SciezkaPrawa.Application.Auth.DTOs;
+using SciezkaPrawa.Application.User.DTOs;
 using SciezkaPrawa.Domain.Exceptions;
 using System;
 using System.Collections.Generic;

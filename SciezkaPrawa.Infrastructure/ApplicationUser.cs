@@ -9,6 +9,6 @@ namespace SciezkaPrawa.Infrastructure
 {
     public class ApplicationUser : IdentityUser
     {
-        public <IEnumerable<UserFollowedAct>>? FollowedActId { get; set; }
+        public ICollection<UserFollowedAct> FollowedActs { get; set; } = new List<UserFollowedAct>();
     }
 }

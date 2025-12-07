@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     internal DbSet<Tag> Tags { get; set; }
     internal DbSet<ActTag> ActTags { get; set; }
     public DbSet<ActComment> ActComments { get; set; }
+    public DbSet<UserFollowedAct> UserFollowedActs { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,6 +58,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                .HasForeignKey(c => c.ActId)
                .OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<UserFollowedAct>()
+            .HasKey(x => new { x.UserId, x.ActId });
+
+        modelBuilder.Entity<UserFollowedAct>()
+            .HasOne(x => x.User)
+            .WithMany(u => u.FollowedActs)
+            .HasForeignKey(x => x.UserId);
+
+        modelBuilder.Entity<UserFollowedAct>()
+            .HasOne(x => x.Act)
+            .WithMany()
+            .HasForeignKey(x => x.ActId);
     }
 
 }

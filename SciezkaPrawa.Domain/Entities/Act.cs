@@ -32,5 +32,7 @@ namespace SciezkaPrawa.Domain.Entities
         public ICollection<ActStage> Stages { get; set; } = new List<ActStage>();
         public ICollection<ActVersion> Versions { get; set; } = new List<ActVersion>();
         public ICollection<ActReadingVote> ReadingVotes { get; set; } = new List<ActReadingVote>();
+        public ICollection<ActComment> Comments { get; set; } = new List<ActComment>();
+
     }
 }

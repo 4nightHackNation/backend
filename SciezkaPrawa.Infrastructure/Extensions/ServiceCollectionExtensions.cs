@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SciezkaPrawa.Application.User;
 using SciezkaPrawa.Domain.Repositories;
 using SciezkaPrawa.Infrastructure.Repositories;
 
@@ -18,6 +20,8 @@ namespace SciezkaPrawa.Infrastructure.Extensions
             services.AddScoped<IStageRepository, StageRepository>();
             services.AddScoped<IActReadingVoteRepository, ActReadingVoteRepository>();
             services.AddScoped<IActVersionRepository, ActVersionRepository>();
+            services.AddScoped<IUserFollowRepository, UserFollowRepository>();
+            services.AddScoped<IUserFollowingService, UserFollowingService>();
         }
     }
 }
