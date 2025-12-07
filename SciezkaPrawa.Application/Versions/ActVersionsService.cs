@@ -1,4 +1,5 @@
-﻿using SciezkaPrawa.Application.Versions.DTOs;
+﻿using SciezkaPrawa.Application.Files;
+using SciezkaPrawa.Application.Versions.DTOs;
 using SciezkaPrawa.Domain.Entities;
 using SciezkaPrawa.Domain.Exceptions;
 using SciezkaPrawa.Domain.Repositories;
@@ -11,7 +12,8 @@ using System.Threading.Tasks;
 namespace SciezkaPrawa.Application.Versions
 {
     public class ActVersionsService(IActVersionRepository actVersionRepository,
-        IActRepository actRepository
+        IActRepository actRepository,
+        IFileStorageService fileStorage
         ) : IActVersionsService
     {
         public async Task<ActVersion> CreateAsync(Guid actId, SaveActVersionDto dto)
@@ -63,6 +65,22 @@ namespace SciezkaPrawa.Application.Versions
                 throw new NotFoundException(nameof(ActVersion), versionId.ToString());
 
             await actVersionRepository.DeleteAsync(version);
+        }
+
+        public async Task UploadPdfAsync(Guid actId, Guid versionId, Stream fileStream, string fileName)
+        {
+            var version = await actVersionRepository.GetByIdAsync(versionId);
+
+            if (version is null || version.ActId != actId)
+                throw new NotFoundException(nameof(ActVersion), versionId.ToString());
+
+            // zapisujemy plik fizycznie
+            var path = await fileStorage.SavePdfAsync(fileStream, fileName, actId, versionId);
+
+            // aktualizujemy wersję
+            version.FilePath = path;
+
+            await actVersionRepository.SaveChangesAsync();
         }
     }
 }

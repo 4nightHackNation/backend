@@ -28,6 +28,7 @@ namespace SciezkaPrawa.Application.Acts.DTOs
         public DateTime? ConsultationEnd { get; set; }
 
         public int AmendmentsCount { get; set; }
+        public string? PlainLanguageSummary { get; set; }
 
         public List<TagDto> Tags { get; set; } = new();
         public List<ActStage> Stages { get; set; } = new();

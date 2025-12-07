@@ -112,6 +112,7 @@ namespace SciezkaPrawa.Application.Acts
                 ConsultationStart = act.ConsultationStart,
                 ConsultationEnd = act.ConsultationEnd,
                 AmendmentsCount = act.AmendmentsCount,
+                PlainLanguageSummary = act.PlainLanguageSummary,
 
                 Tags = act.Tags
                     .Select(at => new TagDto

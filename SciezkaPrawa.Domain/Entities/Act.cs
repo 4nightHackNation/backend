@@ -26,6 +26,8 @@ namespace SciezkaPrawa.Domain.Entities
         public DateTime? ConsultationEnd { get; set; }
 
         public int AmendmentsCount { get; set; }
+        public string? PlainLanguageSummary { get; set; }
+
         public ICollection<ActTag> Tags { get; set; } = new List<ActTag>();
         public ICollection<ActStage> Stages { get; set; } = new List<ActStage>();
         public ICollection<ActVersion> Versions { get; set; } = new List<ActVersion>();

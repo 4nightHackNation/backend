@@ -14,5 +14,7 @@ namespace SciezkaPrawa.Application.Versions
         Task<ActVersion> GetByIdAsync(Guid actId, Guid versionId);
         Task UpdateAsync(Guid actId, Guid versionId, SaveActVersionDto dto);
         Task DeleteAsync(Guid actId, Guid versionId);
+        Task UploadPdfAsync(Guid actId, Guid versionId, Stream fileStream, string fileName);
+
     }
 }

@@ -20,4 +20,8 @@
     <ProjectReference Include="..\SciezkaPrawa.Infrastructure\SciezkaPrawa.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

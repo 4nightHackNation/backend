@@ -39,5 +39,22 @@ namespace SciezkaPrawa.API.Controllers
             await service.DeleteAsync(actId, versionId);
             return NoContent();
         }
+
+        [HttpPost("{versionId:guid}/file")]
+        public async Task<IActionResult> UploadPdf(Guid actId, Guid versionId, IFormFile file)
+        {
+            if (file is null || file.Length == 0)
+                return BadRequest("Plik jest pusty.");
+
+            if (!file.FileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest("Obsługiwane są tylko pliki PDF.");
+            }
+
+            using var stream = file.OpenReadStream();
+            await service.UploadPdfAsync(actId, versionId, stream, file.FileName);
+
+            return NoContent();
+        }
     }
 }
