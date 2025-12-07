@@ -1,12 +1,8 @@
 ﻿using SciezkaPrawa.Application.Acts.DTOs;
+using SciezkaPrawa.Application.Tags.DTOs;
 using SciezkaPrawa.Domain.Entities;
 using SciezkaPrawa.Domain.Exceptions;
 using SciezkaPrawa.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SciezkaPrawa.Application.Acts
 {
@@ -38,7 +34,7 @@ namespace SciezkaPrawa.Application.Acts
                     .Distinct()
                     .Select(tagId => new ActTag
                     {
-                        Act = act,   // EF sam przypisze ActId
+                        Act = act,
                         TagId = tagId
                     })
                     .ToList();
@@ -58,23 +54,77 @@ namespace SciezkaPrawa.Application.Acts
             await actRepository.DeleteAsync(act);
             await actRepository.SaveChangesAsync();
         }
-
-        public async Task<IEnumerable<Act>> GetAllAsync()
+        public async Task<IEnumerable<ActListDto>> GetAllAsync()
         {
             var acts = await actRepository.GetAllAsync();
-            return (acts);
+
+            return acts.Select(a => new ActListDto
+            {
+                Id = a.Id,
+                Title = a.Title,
+                Summary = a.Summary,
+                Status = a.Status,
+                Priority = a.Priority,
+                Urgency = a.Urgency,
+                Committee = a.Committee,
+                Sponsor = a.Sponsor,
+                DateSubmitted = a.DateSubmitted,
+                LastUpdated = a.LastUpdated,
+                HasConsultation = a.HasConsultation,
+                ConsultationStart = a.ConsultationStart,
+                ConsultationEnd = a.ConsultationEnd,
+                AmendmentsCount = a.AmendmentsCount,
+                Tags = a.Tags
+                    .Select(at => new TagDto
+                    {
+                        Id = at.Tag.Id,
+                        Name = at.Tag.Name
+                    })
+                    .ToList()
+            });
         }
 
-        public async Task<Act?> GetById(Guid id)
+        public async Task<Act> GetById(Guid id)
         {
-            var act = await actRepository.GetByIdAsync(id);
+            var act = await actRepository.GetDetailsByIdAsync(id)
+                     ?? throw new NotFoundException(nameof(Act), id.ToString());
+            return act;
+        }
 
-            if (act == null)
+        public async Task<ActDetailsDto> GetByIdAsync(Guid id)
+        {
+            var act = await actRepository.GetDetailsByIdAsync(id)
+                      ?? throw new NotFoundException(nameof(Act), id.ToString());
+
+            return new ActDetailsDto
             {
-                throw new NotFoundException(nameof(act), id.ToString());
-            }
+                Id = act.Id,
+                Title = act.Title,
+                Summary = act.Summary,
+                Status = act.Status,
+                Priority = act.Priority,
+                Urgency = act.Urgency,
+                Committee = act.Committee,
+                Sponsor = act.Sponsor,
+                DateSubmitted = act.DateSubmitted,
+                LastUpdated = act.LastUpdated,
+                HasConsultation = act.HasConsultation,
+                ConsultationStart = act.ConsultationStart,
+                ConsultationEnd = act.ConsultationEnd,
+                AmendmentsCount = act.AmendmentsCount,
 
-            return (act);
+                Tags = act.Tags
+                    .Select(at => new TagDto
+                    {
+                        Id = at.Tag.Id,
+                        Name = at.Tag.Name
+                    })
+                    .ToList(),
+
+                Stages = act.Stages.ToList(),
+                Versions = act.Versions.ToList(),
+                ReadingVotes = act.ReadingVotes.ToList()
+            };
         }
 
         public async Task UpdateAsync(Guid id, SaveActDto dto)

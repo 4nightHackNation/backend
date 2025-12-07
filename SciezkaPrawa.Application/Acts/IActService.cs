@@ -10,8 +10,8 @@ namespace SciezkaPrawa.Application.Acts
 {
     public interface IActService
     {
-        Task<IEnumerable<Act>> GetAllAsync();
-        Task<Act?> GetById(Guid id);
+        Task<IEnumerable<ActListDto>> GetAllAsync();
+        Task<ActDetailsDto> GetByIdAsync(Guid id);
         Task<Act> CreateAsync(SaveActDto dto);
         Task UpdateAsync(Guid id, SaveActDto dto);
         Task DeleteAsync(Guid id);

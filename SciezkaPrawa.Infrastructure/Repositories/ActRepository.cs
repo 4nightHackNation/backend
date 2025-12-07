@@ -24,14 +24,26 @@ namespace SciezkaPrawa.Infrastructure.Repositories
 
         public async Task<IEnumerable<Act>> GetAllAsync()
         {
-            var acts = await dbContext.Acts.ToListAsync();
-            return acts;
+            return await dbContext.Acts
+                .Include(a => a.Tags)
+                    .ThenInclude(at => at.Tag)
+                .ToListAsync();
         }
 
         public async Task<Act?> GetByIdAsync(Guid id)
         {
             var act = await dbContext.Acts.FirstOrDefaultAsync(a => a.Id == id);
             return act;
+        }
+
+        public async Task<Act?> GetDetailsByIdAsync(Guid id)
+        {
+            return await dbContext.Acts
+                .Include(a => a.Tags).ThenInclude(at => at.Tag)
+                .Include(a => a.Stages)
+                .Include(a => a.Versions)
+                .Include(a => a.ReadingVotes)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task SaveChangesAsync()

@@ -11,6 +11,7 @@ namespace SciezkaPrawa.Domain.Repositories
     {
         Task<IEnumerable<Act>> GetAllAsync();
         Task<Act?> GetByIdAsync(Guid id);
+        Task<Act?> GetDetailsByIdAsync(Guid id);
         Task AddAsync(Act act);
         Task DeleteAsync(Act act);
         Task SaveChangesAsync();

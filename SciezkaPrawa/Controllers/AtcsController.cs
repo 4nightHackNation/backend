@@ -8,21 +8,29 @@ namespace SciezkaPrawa.API.Controllers
 {
     [ApiController]
     [Route("api/acts")]
-    public class AtcsController(IActService actService) : ControllerBase
+    public class ActsController(IActService actService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Act>>> GetAllActs()
+        public async Task<ActionResult<IEnumerable<ActListDto>>> GetAllActs()
         {
 
             var acts = await actService.GetAllAsync();
             return Ok(acts);
         }
 
-        [HttpGet("acts/id")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<Act>> GetById(Guid id)
         {
 
-            var acts = await actService.GetById(id);
+            var acts = await actService.GetByIdAsync(id);
+            return Ok(acts);
+        }
+
+        [HttpGet("{id:guid}/with-details")]
+        public async Task<ActionResult<ActDetailsDto>> GetByIdWithDetails(Guid id)
+        {
+
+            var acts = await actService.GetByIdAsync(id);
             return Ok(acts);
         }
 
@@ -37,7 +45,6 @@ namespace SciezkaPrawa.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> Update(Guid id, SaveActDto dto)
         {
             await actService.UpdateAsync(id, dto);
